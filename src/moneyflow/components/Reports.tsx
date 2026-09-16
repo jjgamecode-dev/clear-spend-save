@@ -41,7 +41,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
 
   const summaries = displayMonths.map(m => ({
     ...getMonthSummary(m),
-    name: MONTH_NAMES[m.month].slice(0, 3),
+    name: (MONTH_NAMES[m.month] ?? '').slice(0, 3),
     month: m,
   }));
 
@@ -207,13 +207,13 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                       key={i}
                       style={{
                         borderBottom: i < monthsData.length - 1 ? '1px solid var(--border)' : 'none',
-                        background: i === selectedMonthIndex ? '#EFF6FF' : '',
+                        background: i === selectedMonthIndex ? 'var(--primary-soft)' : '',
                       }}
                     >
                       <td className="px-5 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
-                        {MONTH_NAMES[m.month].slice(0, 3)} {m.year}
+                         {(MONTH_NAMES[m.month] ?? '').slice(0, 3)} {m.year}
                          {i === selectedMonthIndex && (
-                          <span className="ml-2 text-xs px-1.5 py-0.5 rounded" style={{ background: '#DBEAFE', color: '#1E40AF' }}>current</span>
+                           <span className="ml-2 rounded bg-primary-soft px-1.5 py-0.5 text-xs text-primary">current</span>
                         )}
                       </td>
                       <td className="px-5 py-3 mono font-medium" style={{ color: 'var(--income)' }}>{fmt(s.totalIncome, true)}</td>

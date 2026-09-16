@@ -1,24 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import Dashboard from "../moneyflow/components/Dashboard";
+import { useMoneyFlow } from "../moneyflow/MoneyFlowProvider";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({ meta: [
+    { title: "Dashboard — MoneyFlow" },
+    { name: "description", content: "See your monthly income, spending, savings, available money, and budget status." },
+    { property: "og:title", content: "MoneyFlow Dashboard" },
+    { property: "og:description", content: "See how you are doing financially this month." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary_large_image" },
+  ] }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
+  const { monthsData, savingsGoals, monthIndex, openExpenseForm } = useMoneyFlow();
+  const navigate = useNavigate();
+  return <Dashboard monthsData={monthsData} selectedMonthIndex={monthIndex} savingsGoals={savingsGoals} onAddExpense={openExpenseForm} onNavigate={(page) => navigate({ to: page === "dashboard" ? "/" : `/${page}` as "/budget" })} />;
 }
