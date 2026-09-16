@@ -28,9 +28,18 @@ export function fmtShort(amount: number): string {
   return amount.toLocaleString('en-KE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
 }
 
-export function getSavingsGoalProgress(goal: SavingsGoal) {
-  const pct = Math.min((goal.currentAmount / goal.targetAmount) * 100, 100);
-  const remaining = Math.max(goal.targetAmount - goal.currentAmount, 0);
+export function getGoalBalance(goalId: string, months: MonthData[]): number {
+  return months.reduce(
+    (total, month) => total + month.savingsContributions
+      .filter((contribution) => contribution.goalId === goalId)
+      .reduce((sum, contribution) => sum + contribution.amount, 0),
+    0,
+  );
+}
+
+export function getSavingsGoalProgress(goal: SavingsGoal, currentAmount: number) {
+  const pct = Math.min((currentAmount / goal.targetAmount) * 100, 100);
+  const remaining = Math.max(goal.targetAmount - currentAmount, 0);
   const today = new Date();
   const target = new Date(goal.targetDate);
   const monthsLeft = Math.max(

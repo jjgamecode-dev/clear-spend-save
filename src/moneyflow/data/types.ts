@@ -18,7 +18,6 @@ export interface SavingsGoal {
   id: string;
   name: string;
   targetAmount: number;
-  currentAmount: number;
   targetDate: string;
   monthlyContribution: number;
   color: string;
@@ -26,8 +25,10 @@ export interface SavingsGoal {
 }
 
 export interface SavingsContribution {
+  id: string;
   goalId: string;
   amount: number;
+  date: string;
 }
 
 export interface BudgetLine {
@@ -66,15 +67,15 @@ export const EXPENSE_CATEGORIES = [
 ] as const;
 
 export const CATEGORY_COLORS: Record<string, string> = {
-  Housing: '#2563EB',
-  Food: '#F59E0B',
-  Transport: '#06B6D4',
-  Utilities: '#8B5CF6',
-  Subscriptions: '#EC4899',
-  Entertainment: '#F97316',
-  Personal: '#10B981',
-  Savings: '#059669',
-  Other: '#94A3B8',
+  Housing: 'var(--category-housing)',
+  Food: 'var(--category-food)',
+  Transport: 'var(--category-transport)',
+  Utilities: 'var(--category-utilities)',
+  Subscriptions: 'var(--category-subscriptions)',
+  Entertainment: 'var(--category-entertainment)',
+  Personal: 'var(--category-personal)',
+  Savings: 'var(--savings)',
+  Other: 'var(--category-other)',
 };
 
 export const PAYMENT_METHODS = ['M-Pesa', 'Cash', 'Visa Card', 'Bank Transfer', 'Airtel Money'];
