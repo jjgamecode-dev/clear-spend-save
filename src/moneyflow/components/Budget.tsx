@@ -111,7 +111,7 @@ export default function Budget({ month, onUpdateBudget, onUpdateIncomes }: Props
             const remaining = b.budget - actual;
             const pct = b.budget > 0 ? Math.min((actual / b.budget) * 100, 100) : 0;
             const over = actual > b.budget;
-            const color = CATEGORY_COLORS[b.category] ?? '#94A3B8';
+            const color = CATEGORY_COLORS[b.category] ?? 'var(--category-other)';
 
             return (
               <div key={b.category}>
@@ -121,7 +121,7 @@ export default function Budget({ month, onUpdateBudget, onUpdateIncomes }: Props
                     <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />
                     <span className="text-sm font-semibold" style={{ color: 'var(--foreground)' }}>{b.category}</span>
                     {over && (
-                      <span className="text-xs px-2 py-0.5 rounded-full font-medium" style={{ background: '#FEF2F2', color: 'var(--expense)' }}>
+                      <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-xs font-medium text-destructive">
                         Over
                       </span>
                     )}

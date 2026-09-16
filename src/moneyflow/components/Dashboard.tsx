@@ -119,7 +119,7 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
             {fmt(summary.totalIncome)}
           </div>
           {month.incomes.length > 1 && (
-            <div className="text-xs px-2 py-0.5 rounded-full" style={{ background: '#EFF6FF', color: 'var(--primary)' }}>
+            <div className="rounded-full bg-primary-soft px-2 py-0.5 text-xs text-primary">
               {month.incomes.length} sources
             </div>
           )}
@@ -178,7 +178,7 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
                 <div className="text-2xl mb-2">📋</div>
                 <div className="text-sm font-medium mb-1" style={{ color: 'var(--foreground)' }}>No expenses yet</div>
                 <div className="text-xs mb-4">Start tracking where your money goes.</div>
-                <button onClick={onAddExpense} className="px-4 py-2 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'white' }}>
+                <button onClick={onAddExpense} className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">
                   Add expense
                 </button>
               </div>
@@ -214,7 +214,7 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
                   />
                   <Bar dataKey="value" radius={[0, 6, 6, 0]}>
                     {catBarData.map(entry => (
-                      <Cell key={entry.fullName} fill={CATEGORY_COLORS[entry.fullName] ?? '#94A3B8'} />
+                      <Cell key={entry.fullName} fill={CATEGORY_COLORS[entry.fullName] ?? 'var(--category-other)'} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -243,8 +243,8 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <div
-                        className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-xs font-semibold shrink-0"
-                        style={{ background: CATEGORY_COLORS[e.category] ?? '#94A3B8' }}
+                        className="flex size-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold text-primary-foreground"
+                        style={{ background: CATEGORY_COLORS[e.category] ?? 'var(--category-other)' }}
                       >
                         {e.category[0]}
                       </div>
@@ -298,10 +298,10 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
                 {budgetWarnings.map(bw => (
                   <div key={bw.category} className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: bw.pct >= 100 ? 'var(--expense)' : '#F59E0B' }} />
+                      <div className="w-1.5 h-1.5 rounded-full" style={{ background: bw.pct >= 100 ? 'var(--expense)' : 'var(--warning)' }} />
                       <span style={{ color: 'var(--foreground)' }}>{bw.category}</span>
                     </div>
-                    <span className="mono font-medium" style={{ color: bw.pct >= 100 ? 'var(--expense)' : '#D97706' }}>
+                    <span className="mono font-medium" style={{ color: bw.pct >= 100 ? 'var(--expense)' : 'var(--warning)' }}>
                       {bw.pct.toFixed(0)}%
                     </span>
                   </div>

@@ -38,7 +38,7 @@ export default function AddExpenseModal({ currentDate, onAdd, onClose }: Props) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[var(--overlay)] p-0 sm:p-4">
       <div
         className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl p-6 space-y-4"
         style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
@@ -66,7 +66,7 @@ export default function AddExpenseModal({ currentDate, onAdd, onClose }: Props) 
                 placeholder="0"
                 required
                 className="w-36 text-center text-3xl font-bold outline-none bg-transparent"
-                style={{ fontFamily: 'var(--font-mono-data)', color: 'var(--foreground)' }}
+                 style={{ fontFamily: 'var(--font-data)', color: 'var(--foreground)' }}
               />
             </div>
           </div>

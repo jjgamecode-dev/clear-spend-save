@@ -76,7 +76,7 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
         <button
           onClick={onAddExpense}
           className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
-          style={{ background: 'var(--primary)', color: 'white' }}
+          className="shrink-0 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
           onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = '0.9'}
           onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = '1'}
         >
@@ -111,7 +111,7 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
           <div className="text-3xl mb-3">📋</div>
           <div className="text-base font-semibold mb-2" style={{ color: 'var(--foreground)' }}>No expenses yet</div>
           <div className="text-sm mb-6" style={{ color: 'var(--muted-foreground)' }}>Start tracking where your money goes.</div>
-          <button onClick={onAddExpense} className="px-5 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'white' }}>
+          <button onClick={onAddExpense} className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground">
             Add expense
           </button>
         </div>
@@ -140,7 +140,7 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
             {group.items.map((e, i) =>
               editingId === e.id ? (
                 /* Edit form */
-                <div key={e.id} className="p-4 space-y-3" style={{ background: '#F0F6FF', borderBottom: i < group.items.length - 1 ? '1px solid var(--border)' : 'none' }}>
+                <div key={e.id} className="space-y-3 bg-primary-soft p-4" style={{ borderBottom: i < group.items.length - 1 ? '1px solid var(--border)' : 'none' }}>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="text-xs font-medium block mb-1" style={{ color: 'var(--muted-foreground)' }}>Description</label>
@@ -186,7 +186,7 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
                   </div>
                   <div className="flex gap-2">
                     <button onClick={() => setEditingId(null)} className="flex-1 py-2 rounded-xl text-sm font-semibold" style={{ background: 'var(--muted)', color: 'var(--foreground)' }}>Cancel</button>
-                    <button onClick={saveEdit} className="flex-1 py-2 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'white' }}>Save</button>
+                    <button onClick={saveEdit} className="flex-1 rounded-lg bg-primary py-2 text-sm font-semibold text-primary-foreground">Save</button>
                   </div>
                 </div>
               ) : (
@@ -200,15 +200,15 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-xs font-bold shrink-0"
-                      style={{ background: CATEGORY_COLORS[e.category] ?? '#94A3B8' }}
+                      className="flex size-9 shrink-0 items-center justify-center rounded-lg text-xs font-bold text-primary-foreground"
+                      style={{ background: CATEGORY_COLORS[e.category] ?? 'var(--category-other)' }}
                     >
                       {e.category[0]}
                     </div>
                     <div className="min-w-0">
                       <div className="text-sm font-medium truncate" style={{ color: 'var(--foreground)' }}>{e.description}</div>
                       <div className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
-                        <span className="inline-block px-1.5 py-0.5 rounded-md text-xs mr-1.5" style={{ background: `${CATEGORY_COLORS[e.category] ?? '#94A3B8'}18`, color: CATEGORY_COLORS[e.category] ?? '#94A3B8' }}>
+                        <span className="mr-1.5 inline-block rounded-md bg-muted px-1.5 py-0.5 text-xs" style={{ color: CATEGORY_COLORS[e.category] ?? 'var(--category-other)' }}>
                           {e.category}
                         </span>
                         {e.paymentMethod}
@@ -230,8 +230,8 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
                       <button
                         onClick={() => onDelete(e.id)}
                         className="w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all"
-                        style={{ color: '#EF4444' }}
-                        onMouseEnter={el => (el.currentTarget as HTMLElement).style.background = '#FEF2F2'}
+                        style={{ color: 'var(--expense)' }}
+                        onMouseEnter={el => (el.currentTarget as HTMLElement).style.background = 'var(--danger-soft)'}
                         onMouseLeave={el => (el.currentTarget as HTMLElement).style.background = 'transparent'}
                       >
                         ✕
