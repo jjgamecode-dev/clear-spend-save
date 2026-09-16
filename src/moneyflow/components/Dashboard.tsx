@@ -1,6 +1,5 @@
 import { MonthData, SavingsGoal, CATEGORY_COLORS, MONTH_NAMES } from '../data/types';
-import { getMonthSummary, getCategoryTotals, fmt } from '../utils/calculations';
-import { getSavingsGoalProgress } from '../utils/calculations';
+import { getMonthSummary, getCategoryTotals, fmt, getGoalBalance, getSavingsGoalProgress } from '../utils/calculations';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Cell, Tooltip } from 'recharts';
 
 interface Props {
@@ -49,6 +48,7 @@ function AllocationBar({ income, expenses, savings, available }: { income: numbe
 
 export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals, onAddExpense, onNavigate }: Props) {
   const month = monthsData[selectedMonthIndex];
+  if (!month) return null;
   const summary = getMonthSummary(month);
   const categoryTotals = getCategoryTotals(month);
 
@@ -98,7 +98,7 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
   }
   const topGoal = savingsGoals[0];
   if (topGoal) {
-    const { pct } = getSavingsGoalProgress(topGoal);
+    const { pct } = getSavingsGoalProgress(topGoal, getGoalBalance(topGoal.id, monthsData));
     insights.push(`Your ${topGoal.name} goal is ${pct.toFixed(0)}% complete.`);
   }
 
@@ -202,7 +202,8 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
                   <Tooltip
                     content={({ active, payload }) => {
                       if (!active || !payload?.length) return null;
-                      const d = payload[0].payload;
+    const d = payload[0]?.payload;
+    if (!d) return null;
                       return (
                         <div className="rounded-xl px-3 py-2 text-xs shadow-lg" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
                           <div className="font-semibold mb-0.5" style={{ color: 'var(--foreground)' }}>{d.fullName}</div>
@@ -322,7 +323,7 @@ export default function Dashboard({ monthsData, selectedMonthIndex, savingsGoals
               {' '}saved this month
             </div>
             {savingsGoals.slice(0, 2).map(goal => {
-              const { pct } = getSavingsGoalProgress(goal);
+              const { pct } = getSavingsGoalProgress(goal, getGoalBalance(goal.id, monthsData));
               return (
                 <div key={goal.id} className="mb-3">
                   <div className="flex items-center justify-between mb-1.5 text-xs">

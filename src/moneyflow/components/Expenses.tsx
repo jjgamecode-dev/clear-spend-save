@@ -30,7 +30,7 @@ function groupByDate(expenses: Expense[], year: number, month: number): { label:
       else {
         const [, , day] = date.split('-');
         const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        label = `${MONTHS[month]} ${parseInt(day, 10)}`;
+        label = `${MONTHS[month] ?? ''} ${parseInt(day ?? '1', 10)}`;
       }
       return { label, items };
     });

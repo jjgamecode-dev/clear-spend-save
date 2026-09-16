@@ -33,6 +33,8 @@ const ChartTooltip = ({ active, payload, label }: any) => {
 
 export default function Reports({ monthsData, selectedMonthIndex }: Props) {
   const [period, setPeriod] = useState<Period>('6');
+  const selectedMonth = monthsData[selectedMonthIndex] ?? monthsData[0];
+  if (!selectedMonth) return null;
 
   const sliceCount = parseInt(period);
   const displayMonths = monthsData.slice(Math.max(0, monthsData.length - sliceCount));
@@ -48,8 +50,8 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
   const totalExpenses = allSummaries.reduce((s, m) => s + m.totalExpenses, 0);
   const totalSavings = allSummaries.reduce((s, m) => s + m.totalSavings, 0);
   const avgSavingsRate = (totalSavings / totalIncome) * 100;
-  const bestSavingsMonth = allSummaries.reduce((best, m, i) => m.totalSavings > allSummaries[best].totalSavings ? i : best, 0);
-  const highestSpendMonth = allSummaries.reduce((best, m, i) => m.totalExpenses > allSummaries[best].totalExpenses ? i : best, 0);
+  const bestSavingsMonth = allSummaries.reduce((best, m, i) => m.totalSavings > (allSummaries[best]?.totalSavings ?? 0) ? i : best, 0);
+  const highestSpendMonth = allSummaries.reduce((best, m, i) => m.totalExpenses > (allSummaries[best]?.totalExpenses ?? 0) ? i : best, 0);
 
   const trendData = summaries.map(s => ({
     name: s.name,
@@ -64,7 +66,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
   }));
 
   // Category breakdown for selected month
-  const selectedCatTotals = getCategoryTotals(monthsData[selectedMonthIndex]);
+  const selectedCatTotals = getCategoryTotals(selectedMonth);
   const catData = Object.entries(selectedCatTotals)
     .sort((a, b) => b[1] - a[1])
     .map(([name, value]) => ({ name, value }));
@@ -143,7 +145,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                   return (
                     <div className="rounded-xl px-3 py-2 text-xs shadow-lg" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
                       <div className="font-semibold mb-0.5" style={{ color: 'var(--foreground)' }}>{label}</div>
-                      <div className="mono font-semibold" style={{ color: '#059669' }}>{payload[0].value}%</div>
+                      <div className="mono font-semibold" style={{ color: 'var(--savings)' }}>{payload[0]?.value}%</div>
                     </div>
                   );
                 }}
@@ -157,7 +159,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
       {/* Category breakdown for selected month */}
       <div className="mb-10">
         <h2 className="text-sm font-semibold mb-5" style={{ color: 'var(--foreground)' }}>
-          Spending by category — {MONTH_NAMES[monthsData[selectedMonthIndex].month]}
+          Spending by category — {MONTH_NAMES[selectedMonth.month]}
         </h2>
         <div className="space-y-3">
           {catData.map(({ name, value }) => {
@@ -210,7 +212,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                     >
                       <td className="px-5 py-3 font-medium" style={{ color: 'var(--foreground)' }}>
                         {MONTH_NAMES[m.month].slice(0, 3)} {m.year}
-                        {i === selectedMonthIndex && (
+                         {i === selectedMonthIndex && (
                           <span className="ml-2 text-xs px-1.5 py-0.5 rounded" style={{ background: '#DBEAFE', color: '#1E40AF' }}>current</span>
                         )}
                       </td>
@@ -233,13 +235,13 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
         <div>
           <div className="text-xs mb-1" style={{ color: 'var(--muted-foreground)' }}>Best savings month</div>
           <div className="text-sm font-semibold" style={{ color: 'var(--savings)' }}>
-            {MONTH_NAMES[monthsData[bestSavingsMonth].month]} · {fmt(allSummaries[bestSavingsMonth].totalSavings, true)}
+             {MONTH_NAMES[monthsData[bestSavingsMonth]?.month ?? 0]} · {fmt(allSummaries[bestSavingsMonth]?.totalSavings ?? 0, true)}
           </div>
         </div>
         <div>
           <div className="text-xs mb-1" style={{ color: 'var(--muted-foreground)' }}>Highest spending month</div>
           <div className="text-sm font-semibold" style={{ color: 'var(--expense)' }}>
-            {MONTH_NAMES[monthsData[highestSpendMonth].month]} · {fmt(allSummaries[highestSpendMonth].totalExpenses, true)}
+             {MONTH_NAMES[monthsData[highestSpendMonth]?.month ?? 0]} · {fmt(allSummaries[highestSpendMonth]?.totalExpenses ?? 0, true)}
           </div>
         </div>
       </div>

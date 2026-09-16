@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { SavingsGoal, MonthData } from '../data/types';
-import { getSavingsGoalProgress, fmt } from '../utils/calculations';
+import { getGoalBalance, getSavingsGoalProgress, fmt } from '../utils/calculations';
 
 interface Props {
   savingsGoals: SavingsGoal[];
+  monthsData: MonthData[];
   monthData: MonthData;
   onAddGoal: (g: SavingsGoal) => void;
   onUpdateGoal: (g: SavingsGoal) => void;
@@ -15,14 +16,14 @@ const GOAL_COLORS = ['#2563EB', '#059669', '#F59E0B', '#8B5CF6', '#EC4899', '#F9
 const GOAL_ICONS = ['🛡️', '✈️', '💻', '🚗', '📈', '🏠', '🎓', '💎'];
 const uid = () => Math.random().toString(36).slice(2, 10);
 
-export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGoal, onAddContribution }: Props) {
+export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal, onDeleteGoal, onAddContribution }: Props) {
   const [showAdd, setShowAdd] = useState(false);
   const [contributeGoalId, setContributeGoalId] = useState<string | null>(null);
   const [contributionAmount, setContributionAmount] = useState('');
-  const [newGoal, setNewGoal] = useState({ name: '', targetAmount: '', currentAmount: '', targetDate: '', monthlyContribution: '', color: GOAL_COLORS[0], icon: GOAL_ICONS[0] });
+  const [newGoal, setNewGoal] = useState({ name: '', targetAmount: '', targetDate: '', monthlyContribution: '', color: GOAL_COLORS[0] ?? 'var(--goal-1)', icon: GOAL_ICONS[0] ?? '◉' });
 
   const totalSavedThisMonth = monthData.savingsContributions.reduce((s, c) => s + c.amount, 0);
-  const totalCurrentSavings = savingsGoals.reduce((s, g) => s + g.currentAmount, 0);
+  const totalCurrentSavings = savingsGoals.reduce((sum, goal) => sum + getGoalBalance(goal.id, monthsData), 0);
 
   const handleAddGoal = () => {
     if (!newGoal.name || !newGoal.targetAmount) return;
@@ -30,13 +31,12 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
       id: uid(),
       name: newGoal.name,
       targetAmount: parseFloat(newGoal.targetAmount) || 0,
-      currentAmount: parseFloat(newGoal.currentAmount) || 0,
       targetDate: newGoal.targetDate || '2027-12-31',
       monthlyContribution: parseFloat(newGoal.monthlyContribution) || 0,
       color: newGoal.color,
       icon: newGoal.icon,
     });
-    setNewGoal({ name: '', targetAmount: '', currentAmount: '', targetDate: '', monthlyContribution: '', color: GOAL_COLORS[0], icon: GOAL_ICONS[0] });
+    setNewGoal({ name: '', targetAmount: '', targetDate: '', monthlyContribution: '', color: GOAL_COLORS[0] ?? 'var(--goal-1)', icon: GOAL_ICONS[0] ?? '◉' });
     setShowAdd(false);
   };
 
@@ -94,8 +94,9 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
       {/* Goals list */}
       <div className="space-y-4">
         {savingsGoals.map(goal => {
-          const { pct, remaining, monthsLeft, requiredMonthly } = getSavingsGoalProgress(goal);
-          const monthContrib = monthData.savingsContributions.find(c => c.goalId === goal.id)?.amount ?? 0;
+          const currentAmount = getGoalBalance(goal.id, monthsData);
+          const { pct, remaining, monthsLeft, requiredMonthly } = getSavingsGoalProgress(goal, currentAmount);
+          const monthContrib = monthData.savingsContributions.filter(c => c.goalId === goal.id).reduce((sum, contribution) => sum + contribution.amount, 0);
 
           return (
             <div
@@ -138,7 +139,7 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
               <div className="flex items-end justify-between mb-3">
                 <div>
                   <div className="text-xl font-bold mono" style={{ color: 'var(--foreground)' }}>
-                    {fmt(goal.currentAmount)}
+                    {fmt(currentAmount)}
                   </div>
                   <div className="text-xs" style={{ color: 'var(--muted-foreground)' }}>
                     of {fmt(goal.targetAmount)}
@@ -196,7 +197,6 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
               </div>
               {[
                 { key: 'targetAmount', label: 'Target amount (KES)', type: 'number' },
-                { key: 'currentAmount', label: 'Current saved (KES)', type: 'number' },
                 { key: 'monthlyContribution', label: 'Monthly contribution (KES)', type: 'number' },
                 { key: 'targetDate', label: 'Target date', type: 'date' },
               ].map(({ key, label, type }) => (
@@ -225,6 +225,7 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
       {contributeGoalId && (() => {
         const goal = savingsGoals.find(g => g.id === contributeGoalId);
         if (!goal) return null;
+        const currentAmount = getGoalBalance(goal.id, monthsData);
         return (
           <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
             <div className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl p-6 space-y-5" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
@@ -232,7 +233,7 @@ export default function Savings({ savingsGoals, monthData, onAddGoal, onDeleteGo
                 <div>
                   <div className="font-bold text-base" style={{ color: 'var(--foreground)' }}>Add to {goal.name}</div>
                   <div className="text-xs mt-0.5" style={{ color: 'var(--muted-foreground)' }}>
-                    {fmt(goal.currentAmount)} of {fmt(goal.targetAmount)} saved
+                    {fmt(currentAmount)} of {fmt(goal.targetAmount)} saved
                   </div>
                 </div>
                 <button onClick={() => setContributeGoalId(null)} style={{ color: 'var(--muted-foreground)' }}>✕</button>
