@@ -1,0 +1,6 @@
+import { createFileRoute } from "@tanstack/react-router";
+import Savings from "../moneyflow/components/Savings";
+import { useMoneyFlow } from "../moneyflow/MoneyFlowProvider";
+
+export const Route = createFileRoute("/savings")({ head: () => ({ meta: [{ title: "Savings — MoneyFlow" }, { name: "description", content: "Track contribution-derived savings progress toward your goals." }, { property: "og:title", content: "MoneyFlow Savings Goals" }, { property: "og:description", content: "See what you are building toward." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: SavingsPage });
+function SavingsPage() { const { savingsGoals, monthsData, month, addSavingsGoal, deleteSavingsGoal, addContribution } = useMoneyFlow(); return <Savings savingsGoals={savingsGoals} monthsData={monthsData} monthData={month} onAddGoal={addSavingsGoal} onUpdateGoal={() => undefined} onDeleteGoal={deleteSavingsGoal} onAddContribution={addContribution} />; }

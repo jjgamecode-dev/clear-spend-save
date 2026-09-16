@@ -1,0 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
+import Settings from "../moneyflow/components/Settings";
+
+export const Route = createFileRoute("/settings")({ head: () => ({ meta: [{ title: "Settings — MoneyFlow" }, { name: "description", content: "Manage your MoneyFlow profile, currency, categories, payment methods, and preferences." }, { property: "og:title", content: "MoneyFlow Settings" }, { property: "og:description", content: "Personalize your MoneyFlow experience." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }), component: Settings });
