@@ -24,7 +24,7 @@ export default function Settings() {
       <section className="mb-10">
         <h2 className="text-xs font-semibold uppercase tracking-wider mb-5" style={{ color: 'var(--muted-foreground)' }}>Profile</h2>
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-lg font-bold shrink-0" style={{ background: '#7C3AED' }}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold shrink-0" style={{ background: 'var(--avatar)', color: 'var(--avatar-foreground)' }}>
             AK
           </div>
           <div>

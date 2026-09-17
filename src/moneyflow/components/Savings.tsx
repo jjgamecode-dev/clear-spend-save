@@ -126,8 +126,8 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
                   <button
                     onClick={() => onDeleteGoal(goal.id)}
                     className="w-7 h-7 rounded-lg flex items-center justify-center text-xs"
-                    style={{ color: '#EF4444' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#FEF2F2'}
+                    style={{ color: 'var(--expense)' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--danger-soft)'}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                   >
                     ✕
@@ -174,7 +174,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
 
       {/* Add Goal modal */}
       {showAdd && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'var(--overlay)' }}>
           <div className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl p-6 space-y-4" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
             <div className="flex items-center justify-between">
               <h2 className="font-bold text-base" style={{ color: 'var(--foreground)' }}>New Savings Goal</h2>
@@ -227,7 +227,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
         if (!goal) return null;
         const currentAmount = getGoalBalance(goal.id, monthsData);
         return (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'var(--overlay)' }}>
             <div className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl p-6 space-y-5" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
               <div className="flex items-center justify-between">
                 <div>
