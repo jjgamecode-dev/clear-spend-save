@@ -169,7 +169,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
               <div key={name}>
                 <div className="flex items-center justify-between mb-1.5 text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[name] ?? '#94A3B8' }} />
+                    <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[name] ?? 'var(--category-other)' }} />
                     <span style={{ color: 'var(--foreground)' }}>{name}</span>
                   </div>
                   <div className="flex items-center gap-4">
@@ -178,7 +178,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                   </div>
                 </div>
                 <div className="h-1.5 rounded-full" style={{ background: 'var(--border)' }}>
-                  <div className="h-full rounded-full" style={{ width: `${pct}%`, background: CATEGORY_COLORS[name] ?? '#94A3B8' }} />
+                  <div className="h-full rounded-full" style={{ width: `${pct}%`, background: CATEGORY_COLORS[name] ?? 'var(--category-other)' }} />
                 </div>
               </div>
             );
