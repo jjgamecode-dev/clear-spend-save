@@ -12,7 +12,7 @@ interface Props {
   onAddContribution: (goalId: string, amount: number) => void;
 }
 
-const GOAL_COLORS = ['#2563EB', '#059669', '#F59E0B', '#8B5CF6', '#EC4899', '#F97316', '#06B6D4'];
+const GOAL_COLORS = ['var(--goal-1)', 'var(--goal-2)', 'var(--goal-3)', 'var(--goal-4)', 'var(--goal-5)', 'var(--goal-6)', 'var(--goal-7)'];
 const GOAL_ICONS = ['🛡️', '✈️', '💻', '🚗', '📈', '🏠', '🎓', '💎'];
 const uid = () => Math.random().toString(36).slice(2, 10);
 
@@ -59,7 +59,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
         <button
           onClick={() => setShowAdd(true)}
           className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold"
-          style={{ background: 'var(--primary)', color: 'white' }}
+          style={{ background: 'var(--primary)', color: 'var(--primary-foreground)' }}
         >
           + New Goal
         </button>
@@ -85,7 +85,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
           <div className="text-3xl mb-3">🎯</div>
           <div className="text-base font-semibold mb-2" style={{ color: 'var(--foreground)' }}>No savings goals yet</div>
           <div className="text-sm mb-6" style={{ color: 'var(--muted-foreground)' }}>Give your savings a destination.</div>
-          <button onClick={() => setShowAdd(true)} className="px-5 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'white' }}>
+          <button onClick={() => setShowAdd(true)} className="px-5 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'var(--primary-foreground)' }}>
             Create goal
           </button>
         </div>
@@ -126,8 +126,8 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
                   <button
                     onClick={() => onDeleteGoal(goal.id)}
                     className="w-7 h-7 rounded-lg flex items-center justify-center text-xs"
-                    style={{ color: '#EF4444' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = '#FEF2F2'}
+                    style={{ color: 'var(--expense)' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'var(--danger-soft)'}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                   >
                     ✕
@@ -174,7 +174,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
 
       {/* Add Goal modal */}
       {showAdd && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'var(--overlay)' }}>
           <div className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl p-6 space-y-4" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
             <div className="flex items-center justify-between">
               <h2 className="font-bold text-base" style={{ color: 'var(--foreground)' }}>New Savings Goal</h2>
@@ -215,7 +215,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
             </div>
             <div className="flex gap-3 pt-1">
               <button onClick={() => setShowAdd(false)} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--muted)', color: 'var(--foreground)' }}>Cancel</button>
-              <button onClick={handleAddGoal} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'white' }}>Create Goal</button>
+              <button onClick={handleAddGoal} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--primary)', color: 'var(--primary-foreground)' }}>Create Goal</button>
             </div>
           </div>
         </div>
@@ -227,7 +227,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
         if (!goal) return null;
         const currentAmount = getGoalBalance(goal.id, monthsData);
         return (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'rgba(0,0,0,0.4)' }}>
+          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4" style={{ background: 'var(--overlay)' }}>
             <div className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl p-6 space-y-5" style={{ background: 'var(--card)', border: '1px solid var(--border)' }}>
               <div className="flex items-center justify-between">
                 <div>
@@ -253,7 +253,7 @@ export default function Savings({ savingsGoals, monthsData, monthData, onAddGoal
               </div>
               <div className="flex gap-3">
                 <button onClick={() => setContributeGoalId(null)} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: 'var(--muted)', color: 'var(--foreground)' }}>Cancel</button>
-                <button onClick={handleContribute} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: goal.color, color: 'white' }}>Add Money</button>
+                <button onClick={handleContribute} className="flex-1 py-2.5 rounded-xl text-sm font-semibold" style={{ background: goal.color, color: 'var(--primary-foreground)' }}>Add Money</button>
               </div>
             </div>
           </div>

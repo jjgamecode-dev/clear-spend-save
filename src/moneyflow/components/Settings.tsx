@@ -24,7 +24,7 @@ export default function Settings() {
       <section className="mb-10">
         <h2 className="text-xs font-semibold uppercase tracking-wider mb-5" style={{ color: 'var(--muted-foreground)' }}>Profile</h2>
         <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-lg font-bold shrink-0" style={{ background: '#7C3AED' }}>
+          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-lg font-bold shrink-0" style={{ background: 'var(--avatar)', color: 'var(--avatar-foreground)' }}>
             AK
           </div>
           <div>
@@ -206,7 +206,7 @@ export default function Settings() {
                 style={{ background: on ? 'var(--primary)' : 'var(--border)', height: '22px' }}
               >
                 <div
-                  className="absolute top-0.5 w-[18px] h-[18px] rounded-full bg-white shadow-sm transition-all"
+                  className="absolute top-0.5 w-[18px] h-[18px] rounded-full bg-primary-foreground shadow-sm transition-all"
                   style={{ left: on ? 'calc(100% - 20px)' : '2px' }}
                 />
               </div>
@@ -220,7 +220,7 @@ export default function Settings() {
         <button
           onClick={handleSave}
           className="px-6 py-2.5 rounded-xl text-sm font-semibold transition-all"
-          style={{ background: saved ? 'var(--savings)' : 'var(--primary)', color: 'white' }}
+          style={{ background: saved ? 'var(--savings)' : 'var(--primary)', color: 'var(--primary-foreground)' }}
         >
           {saved ? '✓ Saved' : 'Save changes'}
         </button>

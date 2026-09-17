@@ -122,9 +122,9 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
               <YAxis tick={{ fontSize: 10, fill: 'var(--muted-foreground)', fontFamily: 'var(--font-data)' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v / 1000).toFixed(0)}K`} />
               <Tooltip content={<ChartTooltip />} />
               <Legend wrapperStyle={{ fontSize: 11, color: 'var(--muted-foreground)' }} />
-              <Bar dataKey="Income" fill="#2563EB" radius={[4, 4, 0, 0]} maxBarSize={32} />
-              <Bar dataKey="Expenses" fill="#EF4444" radius={[4, 4, 0, 0]} maxBarSize={32} />
-              <Bar dataKey="Savings" fill="#059669" radius={[4, 4, 0, 0]} maxBarSize={32} />
+              <Bar dataKey="Income" fill="var(--income)" radius={[4, 4, 0, 0]} maxBarSize={32} />
+              <Bar dataKey="Expenses" fill="var(--expense)" radius={[4, 4, 0, 0]} maxBarSize={32} />
+              <Bar dataKey="Savings" fill="var(--savings)" radius={[4, 4, 0, 0]} maxBarSize={32} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -150,7 +150,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                   );
                 }}
               />
-              <Line type="monotone" dataKey="Rate" stroke="#059669" strokeWidth={2.5} dot={{ r: 4, fill: '#059669', strokeWidth: 0 }} />
+              <Line type="monotone" dataKey="Rate" stroke="var(--savings)" strokeWidth={2.5} dot={{ r: 4, fill: 'var(--savings)', strokeWidth: 0 }} />
             </LineChart>
           </ResponsiveContainer>
         </div>
@@ -169,7 +169,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
               <div key={name}>
                 <div className="flex items-center justify-between mb-1.5 text-sm">
                   <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[name] ?? '#94A3B8' }} />
+                    <div className="w-2 h-2 rounded-full" style={{ background: CATEGORY_COLORS[name] ?? 'var(--category-other)' }} />
                     <span style={{ color: 'var(--foreground)' }}>{name}</span>
                   </div>
                   <div className="flex items-center gap-4">
@@ -178,7 +178,7 @@ export default function Reports({ monthsData, selectedMonthIndex }: Props) {
                   </div>
                 </div>
                 <div className="h-1.5 rounded-full" style={{ background: 'var(--border)' }}>
-                  <div className="h-full rounded-full" style={{ width: `${pct}%`, background: CATEGORY_COLORS[name] ?? '#94A3B8' }} />
+                  <div className="h-full rounded-full" style={{ width: `${pct}%`, background: CATEGORY_COLORS[name] ?? 'var(--category-other)' }} />
                 </div>
               </div>
             );

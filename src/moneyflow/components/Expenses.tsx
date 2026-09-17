@@ -75,10 +75,7 @@ export default function Expenses({ expenses, year, month, onDelete, onUpdate, on
         </div>
         <button
           onClick={onAddExpense}
-          className="shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all"
           className="shrink-0 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
-          onMouseEnter={e => (e.currentTarget as HTMLElement).style.opacity = '0.9'}
-          onMouseLeave={e => (e.currentTarget as HTMLElement).style.opacity = '1'}
         >
           + Add Expense
         </button>
