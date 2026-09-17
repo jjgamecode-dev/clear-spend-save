@@ -12,7 +12,7 @@ interface Props {
   onAddContribution: (goalId: string, amount: number) => void;
 }
 
-const GOAL_COLORS = ['#2563EB', '#059669', '#F59E0B', '#8B5CF6', '#EC4899', '#F97316', '#06B6D4'];
+const GOAL_COLORS = ['var(--goal-1)', 'var(--goal-2)', 'var(--goal-3)', 'var(--goal-4)', 'var(--goal-5)', 'var(--goal-6)', 'var(--goal-7)'];
 const GOAL_ICONS = ['🛡️', '✈️', '💻', '🚗', '📈', '🏠', '🎓', '💎'];
 const uid = () => Math.random().toString(36).slice(2, 10);
 
